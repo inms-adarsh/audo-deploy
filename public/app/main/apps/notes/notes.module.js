@@ -8,8 +8,7 @@
                 'dx',
                 'ckeditor',
                 'app.notes.languages',
-                'app.notes.packages',
-                'paypal-button'
+                'app.notes.packages'
             ]
         )
         .config(config);

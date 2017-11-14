@@ -89,8 +89,8 @@
 @import "main/apps/notes/languages/views/list-view/sidenavs/main-sidenav.scss";
 @import "main/apps/notes/packages/views/list-view/sidenavs/main-sidenav.scss";
 @import "main/apps/records/redeems/views/list-view/sidenavs/main-sidenav.scss";
-@import "toolbar/toolbar.scss";
 @import "quick-panel/quick-panel.scss";
+@import "toolbar/toolbar.scss";
 @import "main/admin/beers/beers.scss";
 @import "main/admin/containers/containers.scss";
 @import "main/admin/customers/customers.scss";
@@ -115,12 +115,12 @@
 @import "navigation/layouts/horizontal-navigation/navigation.scss";
 @import "navigation/layouts/vertical-navigation/navigation.scss";
 @import "navigation/layouts/vertical-navigation-fullwidth-toolbar-2/navigation.scss";
-@import "toolbar/layouts/content-with-toolbar/toolbar.scss";
-@import "toolbar/layouts/horizontal-navigation/toolbar.scss";
-@import "toolbar/layouts/vertical-navigation-fullwidth-toolbar-2/toolbar.scss";
 @import "quick-panel/tabs/activity/activity-tab.scss";
 @import "quick-panel/tabs/chat/chat-tab.scss";
 @import "quick-panel/tabs/today/today-tab.scss";
+@import "toolbar/layouts/content-with-toolbar/toolbar.scss";
+@import "toolbar/layouts/horizontal-navigation/toolbar.scss";
+@import "toolbar/layouts/vertical-navigation-fullwidth-toolbar-2/toolbar.scss";
 @import "main/apps/bulkbuys/bookings/bookings.scss";
 @import "main/apps/bulkbuys/customers/customers.scss";
 @import "main/apps/notes/languages/languages.scss";
@@ -128,8 +128,8 @@
 @import "main/apps/records/offers/offers.scss";
 @import "main/apps/records/redeems/redeems.scss";
 @import "main/admin/beers/views/list-view/beers.scss";
-@import "main/admin/customers/views/dialogs/customer-dialog.scss";
 @import "main/admin/containers/views/list-view/containers.scss";
+@import "main/admin/customers/views/dialogs/customer-dialog.scss";
 @import "main/admin/customers/views/list-view/customers.scss";
 @import "main/admin/drivers/views/list-view/drivers.scss";
 @import "main/admin/kegs/views/list-view/kegs.scss";
