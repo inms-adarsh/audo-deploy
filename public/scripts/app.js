@@ -4266,6 +4266,97 @@
 {
     'use strict';
 
+    config.$inject = ["$stateProvider", "$translatePartialLoaderProvider", "msApiProvider", "msNavigationServiceProvider"];
+    angular
+        .module('app.admin.drivers',
+            [
+                // 3rd Party Dependencies
+                'dx'
+            ]
+        )
+        .config(config);
+
+    /** @ngInject */
+    function config($stateProvider, $translatePartialLoaderProvider, msApiProvider, msNavigationServiceProvider)
+    {
+        // State
+        $stateProvider
+            .state('app.drivers', {
+                abstract: true,
+                url     : '/drivers'
+            })
+            .state('app.drivers.list', {
+                url      : '/list',
+                views    : {
+                    'content@app': {
+                        templateUrl: 'app/main/admin/drivers/views/list-view/drivers.html',
+                        controller : 'DriversController as vm'
+                    }
+                },
+                 resolve : {
+                    currentAuth: ["auth", function (auth) {
+                        // returns a promisse so the resolve waits for it to complete
+                        return auth.$requireSignIn();
+                    }],
+                    tenantInfo: ["auth", "authService", function(auth, authService){
+                        return authService.retrieveTenant();
+                    }],
+                    settings: ["adminService", function(adminService) {
+                        return adminService.getCurrentSettings();
+                    }]
+                },
+                bodyClass: 'drivers'
+            });
+
+        // Translation
+        $translatePartialLoaderProvider.addPart('app/main/admin/drivers');
+
+        // Api
+        msApiProvider.register('drivers.dashboard', ['app/data/e-commerce/dashboard.json']);
+        msApiProvider.register('drivers.products', ['app/data/e-commerce/products.json']);
+        msApiProvider.register('drivers.product', ['app/data/e-commerce/product.json']);
+        msApiProvider.register('drivers.orders', ['app/data/e-commerce/orders.json']);
+        msApiProvider.register('drivers.statuses', ['app/data/e-commerce/statuses.json']);
+        msApiProvider.register('drivers.order', ['app/data/e-commerce/order.json']);
+
+        // Navigation
+
+        msNavigationServiceProvider.saveItem('admin.drivers', {
+            title: 'Drivers',
+            state: 'app.drivers.list'
+        });
+    }
+})();
+(function ()
+{
+    'use strict';
+
+    DriversController.$inject = ["$state", "$scope", "$mdDialog", "$document", "driverService"];
+    angular
+        .module('app.admin.drivers')
+        .controller('DriversController', DriversController);
+
+    /** @ngInject */
+    function DriversController($state, $scope, $mdDialog, $document, driverService)
+    {
+        var vm = this;
+
+        // Data
+        
+        // Methods
+        init();
+        //////////
+
+        function init() {
+            vm.driverGridOptions = driverService.gridOptions('vm.drivers');
+        }
+
+    }
+})();
+(function ()
+{
+    'use strict';
+
     CustomersController.$inject = ["$state", "$scope", "$mdDialog", "$document", "customerService"];
     angular
         .module('app.admin.customers')
@@ -4375,97 +4466,6 @@
     }
 })();
 
-(function ()
-{
-    'use strict';
-
-    config.$inject = ["$stateProvider", "$translatePartialLoaderProvider", "msApiProvider", "msNavigationServiceProvider"];
-    angular
-        .module('app.admin.drivers',
-            [
-                // 3rd Party Dependencies
-                'dx'
-            ]
-        )
-        .config(config);
-
-    /** @ngInject */
-    function config($stateProvider, $translatePartialLoaderProvider, msApiProvider, msNavigationServiceProvider)
-    {
-        // State
-        $stateProvider
-            .state('app.drivers', {
-                abstract: true,
-                url     : '/drivers'
-            })
-            .state('app.drivers.list', {
-                url      : '/list',
-                views    : {
-                    'content@app': {
-                        templateUrl: 'app/main/admin/drivers/views/list-view/drivers.html',
-                        controller : 'DriversController as vm'
-                    }
-                },
-                 resolve : {
-                    currentAuth: ["auth", function (auth) {
-                        // returns a promisse so the resolve waits for it to complete
-                        return auth.$requireSignIn();
-                    }],
-                    tenantInfo: ["auth", "authService", function(auth, authService){
-                        return authService.retrieveTenant();
-                    }],
-                    settings: ["adminService", function(adminService) {
-                        return adminService.getCurrentSettings();
-                    }]
-                },
-                bodyClass: 'drivers'
-            });
-
-        // Translation
-        $translatePartialLoaderProvider.addPart('app/main/admin/drivers');
-
-        // Api
-        msApiProvider.register('drivers.dashboard', ['app/data/e-commerce/dashboard.json']);
-        msApiProvider.register('drivers.products', ['app/data/e-commerce/products.json']);
-        msApiProvider.register('drivers.product', ['app/data/e-commerce/product.json']);
-        msApiProvider.register('drivers.orders', ['app/data/e-commerce/orders.json']);
-        msApiProvider.register('drivers.statuses', ['app/data/e-commerce/statuses.json']);
-        msApiProvider.register('drivers.order', ['app/data/e-commerce/order.json']);
-
-        // Navigation
-
-        msNavigationServiceProvider.saveItem('admin.drivers', {
-            title: 'Drivers',
-            state: 'app.drivers.list'
-        });
-    }
-})();
-(function ()
-{
-    'use strict';
-
-    DriversController.$inject = ["$state", "$scope", "$mdDialog", "$document", "driverService"];
-    angular
-        .module('app.admin.drivers')
-        .controller('DriversController', DriversController);
-
-    /** @ngInject */
-    function DriversController($state, $scope, $mdDialog, $document, driverService)
-    {
-        var vm = this;
-
-        // Data
-        
-        // Methods
-        init();
-        //////////
-
-        function init() {
-            vm.driverGridOptions = driverService.gridOptions('vm.drivers');
-        }
-
-    }
-})();
 (function ()
 {
     'use strict';
@@ -6580,6 +6580,112 @@
 (function () {
     'use strict';
 
+    driverService.$inject = ["$firebaseArray", "$firebaseObject", "$q", "authService", "auth", "firebaseUtils", "dxUtils", "config"];
+    angular
+        .module('app.admin.drivers')
+        .factory('driverService', driverService);
+
+    /** @ngInject */
+    function driverService($firebaseArray, $firebaseObject, $q, authService, auth,firebaseUtils, dxUtils, config) {
+        var tenantId = authService.getCurrentTenant();
+        // Private variables
+
+        var service = {
+            gridOptions: gridOptions,
+            saveDriver: saveDriver,
+            updateDriver: updateDriver,
+            fetchDriverList: fetchDriverList
+        };
+
+        return service;
+
+        //////////
+
+        /**
+         * Grid Options for driver list
+         * @param {Object} dataSource 
+         */
+        function gridOptions(dataSource) {
+            var gridOptions = dxUtils.createGrid(),
+                otherConfig = {
+                    dataSource: {
+                        load: function () {
+                            var defer = $q.defer();
+                            fetchDriverList().then(function (data) {
+                                defer.resolve(data);
+                            });
+                            return defer.promise;
+                        },
+                        insert: function (driverObj) {
+                            saveDriver(driverObj);
+                        },
+                        update: function (key, driverObj) {
+                            updateDriver(key, driverObj);
+                        },
+                        remove: function (key) {
+                            deleteDriver(key);
+                        }
+                    },
+                    summary: {
+                        totalItems: [{
+                            column: 'name',
+                            summaryType: 'count'
+                        }]
+                    }, 
+                    columns: config.driverGridCols(),
+                    export: {
+                        enabled: true,
+                        fileName: 'Drivers',
+                        allowExportSelectedData: true
+                    }
+                };
+
+            angular.extend(gridOptions, otherConfig);
+            return gridOptions;
+        };
+
+        /**
+         * Save form data
+         * @returns {Object} Driver Form data
+         */
+        function saveDriver(driverObj) {
+            var ref = rootRef.child('tenant-drivers').child(tenantId);
+            driverObj.user = auth.$getAuth().uid;
+            return firebaseUtils.addData(ref, driverObj);
+        }
+
+        /**
+         * Fetch driver list
+         * @returns {Object} Driver data
+         */
+        function fetchDriverList() {
+            var ref = rootRef.child('tenant-drivers').child(tenantId).orderByChild('deactivated').equalTo(null);
+            return firebaseUtils.fetchList(ref);
+        }
+
+        /**
+         * Fetch driver list
+         * @returns {Object} Driver data
+         */
+        function updateDriver(key, driverData) {
+            var ref = rootRef.child('tenant-drivers').child(tenantId).child(key['$id']);
+            return firebaseUtils.updateData(ref, driverData);
+        }
+
+        /**
+         * Delete Driver
+         * @returns {Object} driver data
+         */
+        function deleteDriver(key) {
+            var ref = rootRef.child('tenant-drivers').child(tenantId).child(key['$id']);
+            return firebaseUtils.updateData(ref, {deactivated: false});
+        }
+
+    }
+}());
+(function () {
+    'use strict';
+
     customerService.$inject = ["$firebaseArray", "$firebaseObject", "$q", "authService", "auth", "firebaseUtils", "dxUtils", "config"];
     angular
         .module('app.admin.customers')
@@ -6789,112 +6895,6 @@
         function deleteCustomer(key) {
             var ref = rootRef.child('tenant-customers').child(tenantId).child(key['$id']);
             return firebaseUtils.updateData(ref, { deactivated: false });
-        }
-
-    }
-}());
-(function () {
-    'use strict';
-
-    driverService.$inject = ["$firebaseArray", "$firebaseObject", "$q", "authService", "auth", "firebaseUtils", "dxUtils", "config"];
-    angular
-        .module('app.admin.drivers')
-        .factory('driverService', driverService);
-
-    /** @ngInject */
-    function driverService($firebaseArray, $firebaseObject, $q, authService, auth,firebaseUtils, dxUtils, config) {
-        var tenantId = authService.getCurrentTenant();
-        // Private variables
-
-        var service = {
-            gridOptions: gridOptions,
-            saveDriver: saveDriver,
-            updateDriver: updateDriver,
-            fetchDriverList: fetchDriverList
-        };
-
-        return service;
-
-        //////////
-
-        /**
-         * Grid Options for driver list
-         * @param {Object} dataSource 
-         */
-        function gridOptions(dataSource) {
-            var gridOptions = dxUtils.createGrid(),
-                otherConfig = {
-                    dataSource: {
-                        load: function () {
-                            var defer = $q.defer();
-                            fetchDriverList().then(function (data) {
-                                defer.resolve(data);
-                            });
-                            return defer.promise;
-                        },
-                        insert: function (driverObj) {
-                            saveDriver(driverObj);
-                        },
-                        update: function (key, driverObj) {
-                            updateDriver(key, driverObj);
-                        },
-                        remove: function (key) {
-                            deleteDriver(key);
-                        }
-                    },
-                    summary: {
-                        totalItems: [{
-                            column: 'name',
-                            summaryType: 'count'
-                        }]
-                    }, 
-                    columns: config.driverGridCols(),
-                    export: {
-                        enabled: true,
-                        fileName: 'Drivers',
-                        allowExportSelectedData: true
-                    }
-                };
-
-            angular.extend(gridOptions, otherConfig);
-            return gridOptions;
-        };
-
-        /**
-         * Save form data
-         * @returns {Object} Driver Form data
-         */
-        function saveDriver(driverObj) {
-            var ref = rootRef.child('tenant-drivers').child(tenantId);
-            driverObj.user = auth.$getAuth().uid;
-            return firebaseUtils.addData(ref, driverObj);
-        }
-
-        /**
-         * Fetch driver list
-         * @returns {Object} Driver data
-         */
-        function fetchDriverList() {
-            var ref = rootRef.child('tenant-drivers').child(tenantId).orderByChild('deactivated').equalTo(null);
-            return firebaseUtils.fetchList(ref);
-        }
-
-        /**
-         * Fetch driver list
-         * @returns {Object} Driver data
-         */
-        function updateDriver(key, driverData) {
-            var ref = rootRef.child('tenant-drivers').child(tenantId).child(key['$id']);
-            return firebaseUtils.updateData(ref, driverData);
-        }
-
-        /**
-         * Delete Driver
-         * @returns {Object} driver data
-         */
-        function deleteDriver(key) {
-            var ref = rootRef.child('tenant-drivers').child(tenantId).child(key['$id']);
-            return firebaseUtils.updateData(ref, {deactivated: false});
         }
 
     }
