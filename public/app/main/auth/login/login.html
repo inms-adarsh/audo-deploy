@@ -1,0 +1,72 @@
+<div id="login" class="flex-scrollable" layout="column" ms-scroll>
+        <md-toolbar id="toolbar" class="md-menu-toolbar md-whiteframe-1dp">
+                <div class="container">
+                    <div layout="row" layout-align="space-between center">
+        
+                        <div layout="row" layout-align="start center">
+                            <div class="logo" layout="row" layout-align="start center" ui-sref="app.auth_landing">
+                                <span class="logo-image">A</span>
+                                <span class="logo-text">AUDO</span>
+                            </div>
+                        </div>
+        
+                        <div layout="row" layout-align="start center">
+                                <md-progress-circular id="toolbar-progress" ng-if="$root.loadingProgress" class="md-accent" md-mode="indeterminate" md-diameter="32">
+                                    </md-progress-circular>
+                        </div>
+                    </div>
+                </div>
+        </md-toolbar>
+        <div id="login-form-wrapper" layout="column" layout-align="center center">
+            <div id="login-form" class="md-whiteframe-8dp">
+    
+                <div class="title" translate="LOGIN.TITLE">Log in to your account</div>
+    
+                <form name="loginForm" ng-submit="vm.login()" novalidate>
+                    <md-input-container class="md-block" md-no-float>
+                        <input type="email" name="email" ng-model="vm.form.email" placeholder="Email"
+                               translate translate-attr-placeholder="LOGIN.EMAIL"
+                               ng-pattern="/^.+@.+\..+$/" required>
+                        <div ng-messages="loginForm.email.$error" role="alert" multiple>
+                            <div ng-message="required">
+                                <span translate="LOGIN.ERRORS.EMAIL_REQUIRED">Email field is required</span>
+                            </div>
+                            <div ng-message="pattern">
+                                <span translate="LOGIN.ERRORS.EMAIL_MUST_VALID">Email must be a valid e-mail address</span>
+                            </div>
+                        </div>
+                    </md-input-container>
+    
+                    <md-input-container class="md-block" md-no-float>
+                        <input type="password" name="password" ng-model="vm.form.password" placeholder="Password"
+                               translate translate-attr-placeholder="LOGIN.PASSWORD"
+                               required>
+                        <div ng-messages="loginForm.password.$error" role="alert">
+                            <div ng-message="required">
+                                <span translate="LOGIN.ERRORS.PASSWORD_REQUIRED">Password field is required</span>
+                            </div>
+                        </div>
+                    </md-input-container>
+    
+                    <div class="remember-forgot-password" layout="row" layout-xs="column"
+                         layout-align="space-between center">
+    
+                        <a ui-sref="app.auth_forgot-password" class="forgot-password md-accent-color"
+                           translate="LOGIN.FORGOT_PASSWORD">Forgot Password?</a>
+                    </div>
+    
+                    <md-button type="submit" class="md-raised md-accent submit-button" aria-label="LOG IN"
+                               ng-disabled="loginForm.$invalid || loginForm.$pristine"
+                               translate="LOGIN.LOG_IN" translate-attr-aria-label="LOGIN.LOG_IN">
+                        LOG IN
+                    </md-button>
+                </form>
+    
+    
+                <div class="register" layout="row" layout-sm="column" layout-align="center center">
+                    <span class="text" translate="LOGIN.DONT_HAVE_ACCOUNT">Don't have an account?</span>
+                    <a class="link" ui-sref="app.auth_register" translate="LOGIN.CREATE_ACCOUNT">Create an account</a>
+                </div>
+            </div>
+        </div>
+    </div>

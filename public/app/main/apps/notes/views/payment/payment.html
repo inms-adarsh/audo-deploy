@@ -1,0 +1,80 @@
+<div class="page-layout carded left-sidenav single-scroll" id="notes" layout="row">
+
+    <!-- TOP BACKGROUND -->
+    <div class="top-bg md-accent-bg"></div>
+    <!-- / TOP BACKGROUND -->
+
+    <!-- SIDENAV -->
+    <!--<md-sidenav class="sidenav" md-is-locked-open="$mdMedia('gt-md')" md-component-id="sidenav"
+         ng-include="'app/main/apps/notes/views/list-view/sidenavs/main-sidenav.html'" ms-scroll
+                    ms-sidenav-helper>
+    
+        </md-sidenav>-->
+    <!-- / SIDENAV -->
+
+    <!-- CENTER -->
+    <div class="center" flex>
+
+        <!-- CONTENT HEADER -->
+        <div class="header" layout="row" layout-align="start center">
+
+            <div class="logo" layout="row" layout-align="start center">
+                <span class="logo-icon">
+                        <md-icon md-font-icon="icon-plus" class="icon"></md-icon>
+                    </span>
+                <span class="logo-text" translate="NOTE.NEW"></span>
+            </div>
+
+        </div>
+        <!-- / CONTENT HEADER -->
+
+        <!-- CONTENT CARD -->
+        <div class="content-card">
+
+
+            <!-- CONTENT TOOLBAR -->
+            <!-- / CONTENT TOOLBAR -->
+            <!-- CONTENT -->
+            <div layout="row">
+
+                <!-- BASIC FORM -->
+                <div class="form-wrapper md-whiteframe-1dp" flex="60">
+                    
+                        <div class="form-title">Create Audio Note</div>
+
+                        <div data-options="dxTemplate: { name:'info' }">
+                            <div dx-form="vm.bulkgridForm"></div>
+                            </br>
+                            <div style="text-align:center">
+                                <div dx-button="saveNewBttonOptions"></div>
+                                <div dx-button="buttonOptions"></div>
+                            </div>
+                        </div>
+
+                </div>
+                <!-- / BASIC FORM -->
+
+                <!-- BASIC FORM DATA -->
+                <div class="form-wrapper form-data-wrapper md-whiteframe-1dp" flex="40">
+                    <div class="form-title">Buy More Word Credit</div>
+                    <div class="json-data-wrapper">
+                        <div data-options="dxTemplate: { name:'cart' }">
+                            <div dx-form="vm.cartForm"></div>
+                            </br>
+                            <div id="paypal-button" style="text-align: center">
+                                <paypal-button env="opts.env" client="opts.client" payment="opts.payment" commit="opts.commit" on-authorize="opts.onAuthorize"></paypal-button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- / BASIC FORM DATA -->
+            </div>
+            <!-- / CONTENT -->
+
+        </div>
+        <!-- / CONTENT CARD -->
+
+    </div>
+    <!-- / CENTER -->
+
+</div>

@@ -1,0 +1,74 @@
+<div id="register" class="flex-scrollable" layout="column" ms-scroll>
+        <md-toolbar id="toolbar" class="md-menu-toolbar md-whiteframe-1dp">
+                <div class="container">
+                    <div layout="row" layout-align="space-between center">
+        
+                        <div layout="row" layout-align="start center">
+                            <div class="logo" layout="row" layout-align="start center" ui-sref="app.auth_landing">
+                                <span class="logo-image">A</span>
+                                <span class="logo-text">AUDO</span>
+                            </div>
+                        </div>
+        
+                        <div layout="row" layout-align="start center">
+                        </div>
+                    </div>
+                </div>
+        </md-toolbar>
+        <div id="register-form-wrapper" layout="column" layout-align="center center">
+            <div id="register-form" class="md-whiteframe-8dp">
+    
+                <div class="title" translate="REGISTER.TITLE">Create an account</div>
+    
+                <form name="registerForm" ng-submit="vm.register()" novalidate>
+                        <md-input-container class="md-block" md-no-float>
+                            <input name="username" ng-model="vm.form.username" placeholder="Name"
+                                   translate translate-attr-placeholder="REGISTER.NAME"
+                                   required>
+                            <div ng-messages="registerForm.username.$error" role="alert">
+                                <div ng-message="required">
+                                    <span translate="REGISTER.ERRORS.USERNAME_REQUIRED">Username field is required</span>
+                                </div>
+                            </div>
+                        </md-input-container>
+        
+                        <md-input-container class="md-block" md-no-float>
+                            <input type="email" name="email" ng-model="vm.form.email" placeholder="Email"
+                                   translate translate-attr-placeholder="REGISTER.EMAIL"
+                                   ng-pattern="/^.+@.+\..+$/" required>
+                            <div ng-messages="registerForm.email.$error" role="alert" multiple>
+                                <div ng-message="required">
+                                    <span translate="REGISTER.ERRORS.EMAIL_REQUIRED">Email field is required</span>
+                                </div>
+                                <div ng-message="pattern">
+                                    <span translate="REGISTER.ERRORS.EMAIL_MUST_VALID">Email must be a valid e-mail address</span>
+                                </div>
+                            </div>
+                        </md-input-container>
+        
+                        <md-input-container class="md-block" md-no-float>
+                            <input type="password" name="password" ng-model="vm.form.password" placeholder="Password"
+                                   translate translate-attr-placeholder="REGISTER.PASSWORD"
+                                   required>
+                            <div ng-messages="registerForm.password.$error" role="alert">
+                                <div ng-message="required">
+                                    <span translate="REGISTER.ERRORS.PASSWORD_REQUIRED">Password field is required</span>
+                                </div>
+                            </div>
+                        </md-input-container>
+                        
+                        <md-button type="submit" class="md-raised md-accent submit-button" aria-label="CREATE MY ACCOUNT"
+                                   ng-disabled="registerForm.$invalid || registerForm.$pristine"
+                                   translate="REGISTER.CREATE_ACCOUNT"
+                                   translate-attr-aria-label="REGISTER.CREATE_ACCOUNT">
+                            CREATE MY ACCOUNT
+                        </md-button>
+                    </form>
+            
+                <div class="login" layout="row" layout-xs="column" layout-align="center center">
+                    <span class="text" translate="REGISTER.ALREADY_HAVE">Already have an account?</span>
+                    <a class="link" ui-sref="app.auth_login" translate="REGISTER.LOGIN">Log in</a>
+                </div>
+            </div>
+        </div>
+    </div>

@@ -1,0 +1,205 @@
+#login {
+    height: 100%;
+    background: url('/assets/images/backgrounds/march.jpg') no-repeat;
+    background-size: cover;
+
+    .container {
+        margin-right: auto;
+        margin-left: auto;
+        -moz-box-sizing: content-box;
+        box-sizing: content-box;
+        min-width: 940px;
+        max-width: 1150px;
+    }
+    #toolbar {
+        padding: 6px 0 0 0px;
+        
+        .logo {
+            margin-right: 16px;
+            margin-top: 15px;
+            .logo-image {
+                display: block;
+                background: material-color('light-blue', '600');
+                width: 32px;
+                min-width: 32px;
+                height: 32px;
+                line-height: 32px;
+                text-align: center;
+                color: #FFFFFF;
+                font-size: 16px;
+                font-weight: 500;
+                border-radius: 2px;
+            }
+
+            .logo-text {
+                color: rgba(0, 0, 0, 0.87);
+                margin-left: 16px;
+                font-size: 16px;
+            }
+        }
+    }
+
+    #login-form-wrapper {
+        flex: 1 0 auto;
+        padding: 32px;
+
+        #login-form {
+            width: 384px;
+            max-width: 384px;
+            padding: 32px;
+            background: #FFFFFF;
+            text-align: center;
+
+            .logo {
+                width: 128px;
+                height: 128px;
+                line-height: 128px;
+                font-size: 86px;
+                font-weight: 500;
+                margin: 32px auto;
+                color: #FFFFFF;
+                border-radius: 2px;
+            }
+
+            .title {
+                font-size: 17px;
+                margin: 16px 0 32px 0;
+            }
+
+            form {
+                width: 100%;
+                text-align: left;
+
+                md-checkbox {
+                    margin: 0;
+                }
+
+                .remember-forgot-password {
+                    font-size: 13px;
+                    margin-top: 8px;
+
+                    .remember-me {
+                        margin-bottom: 16px
+                    }
+
+                    .forgot-password {
+                        font-size: 13px;
+                        font-weight: 500;
+                        margin-bottom: 16px
+                    }
+                }
+
+                .submit-button {
+                    width: 220px;
+                    margin: 16px auto;
+                    display: block;
+                }
+            }
+
+            .register {
+                margin: 32px auto 24px auto;
+                width: 250px;
+                font-weight: 500;
+
+                .text {
+                    margin-right: 8px;
+                }
+
+                .link {
+
+                }
+            }
+
+            .separator {
+                font-size: 15px;
+                font-weight: 600;
+                margin: 24px auto 16px auto;
+                position: relative;
+                overflow: hidden;
+                width: 100px;
+                color: rgba(0, 0, 0, 0.54);
+
+                .text {
+                    display: inline-block;
+                    vertical-align: baseline;
+                    position: relative;
+                    padding: 0 8px;
+                    z-index: 9999;
+
+                    &:before, &:after {
+                        content: '';
+                        display: block;
+                        width: 30px;
+                        position: absolute;
+                        top: 10px;
+                        border-top: 1px solid rgba(0, 0, 0, 0.12);
+                    }
+
+                    &:before {
+                        right: 100%;
+                    }
+
+                    &:after {
+                        left: 100%;
+                    }
+                }
+            }
+
+            .md-button {
+
+                &.google,
+                &.facebook {
+                    width: 192px;
+                    text-transform: none;
+                    color: #FFFFFF;
+                    font-size: 13px;
+
+                    md-icon {
+                        color: #FFFFFF;
+                        margin: 0 8px 0 0;
+                    }
+                }
+
+                &.google {
+                    background-color: #D73D32;
+                }
+
+                &.facebook {
+                    background-color: rgb(63, 92, 154);
+                }
+            }
+        }
+    }
+}
+
+// RESPONSIVE
+@media screen and (max-width: $layout-breakpoint-xs) {
+
+    #login {
+
+        #login-form-wrapper {
+            padding: 16px;
+
+            #login-form {
+                padding: 24px;
+                width: 100%;
+
+                form {
+
+                    .md-button {
+                        width: 90%;
+                    }
+                }
+
+                .md-button {
+
+                    &.google,
+                    &.facebook {
+                        width: 80%;
+                    }
+                }
+            }
+        }
+    }
+
+}

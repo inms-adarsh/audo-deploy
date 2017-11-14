@@ -1,0 +1,150 @@
+<div class="flex-scrollable" layout="column" ms-scroll>
+    <div id="landing" class="flex-scrollable" layout="column" ms-scroll>
+        <md-toolbar id="toolbar" class="md-menu-toolbar md-whiteframe-1dp">
+            <div class="container">
+                <div layout="row" layout-align="space-between center">
+
+                    <div layout="row" layout-align="start center">
+                        <div class="logo" layout="row" layout-align="start center" ui-sref="app.auth_landing">
+                            <span class="logo-image">A</span>
+                            <span class="logo-text">AUDO</span>
+                        </div>
+                    </div>
+
+                    <div layout="row" layout-align="start center">
+
+                        <md-progress-circular id="toolbar-progress" ng-if="$root.loadingProgress" class="md-accent" md-mode="indeterminate" md-diameter="32">
+                        </md-progress-circular>
+                        <md-button class="md-raised md-primary" ng-hide="showMyAcc" aria-label="Login" ui-sref="app.auth_login">
+                            Login
+                        </md-button>
+                        <md-button class="md-raised md-success" ng-show="showMyAcc" aria-label="Login" ui-sref="app.notes.list">
+                            My Account
+                        </md-button>
+                    </div>
+                </div>
+            </div>
+        </md-toolbar>
+
+        <div id="landing-form-wrapper">
+            <div class="content" layout="column" layout-align="center center">
+                <h1 class="main-title">A Text to Audio Converter</h1>
+
+                <h2 class="sub-title">Audo is a Text to speech software, powered by Amazon Polly Voices</h2>
+                </br>
+                <md-button class="md-raised md-success signup" aria-label="Login" ui-sref="app.auth_register">
+                    Create an Account
+                </md-button>
+            </div>
+
+
+        </div>
+
+
+    </div>
+
+
+    <!-- WIDGET GROUP -->
+    <div layout="row" layout-align="center center" class="white-bg" flex="100">
+        <div class="content" layout="column" layout-align="center center">
+            <h1 class="main-title">Features</h1>
+            <div layout="row" layout-align="center center">
+                <div class="column" layout-align="center center" flex="20" ng-repeat="activity in vm.features">
+                    <i class="icon md-display-4" ng-class="activity.icon"></i> 
+                    <div class="md-subhead">{{activity.value}}</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="white-bg" flex="100">
+        <div class="content" layout="column" layout-align="center center">
+            <h1 class="main-title">Price</h1>
+        </div>
+        <div class="price-tables" flex layout="row" layout-align="center center" layout-wrap>
+            <div class="price-table style-3 md-whiteframe-1dp" layout="column">
+                <div class="package-type">
+                    <div class="title">Starter</div>
+                    <div class="subtitle">For small teams</div>
+                </div>
+
+                <div class="price md-primary-bg md-hue-3" layout="row" layout-align="center start">
+                    <div class="currency">$</div>
+                    <div layout="row" layout-align="center end">
+                        <div class="value">29</div>
+                        <div class="period">monthly per user</div>
+                    </div>
+                </div>
+
+                <div class="terms" layout="column" layout-align="start center">
+                    <div class="term">Unlimited projects</div>
+                    <div class="term">Unlimited pages</div>
+                    <div class="term">Unlimited disk space</div>
+                    <div class="term">24 / 7 Free support</div>
+                </div>
+
+                <md-button class="cta-button md-raised md-accent">GET STARTED FREE</md-button>
+
+                <div class="note">7 day free trial to start</div>
+            </div>
+
+            <div class="price-table style-3 md-whiteframe-8dp" layout="column">
+                <div class="package-type">
+                    <div class="title">Pro</div>
+                    <div class="subtitle">For larger teams</div>
+                </div>
+
+                <div class="price md-primary-bg" layout="row" layout-align="center start">
+                    <div class="currency">$</div>
+                    <div layout="row" layout-align="center end">
+                        <div class="value">59</div>
+                        <div class="period">monthly per user</div>
+                    </div>
+                </div>
+
+                <div class="terms" layout="column" layout-align="start center">
+                    <div class="term">Unlimited projects</div>
+                    <div class="term">Unlimited pages</div>
+                    <div class="term">Unlimited disk space</div>
+                    <div class="term">24 / 7 Free support</div>
+                    <div class="term md-warn-fg">Advanced reporting</div>
+                    <div class="term md-warn-fg">Customizable interface</div>
+                    <div class="term md-warn-fg">CRM Integration</div>
+                </div>
+
+                <md-button class="cta-button md-raised md-accent">GET STARTED FREE</md-button>
+
+                <div class="note">30 day free trial to start</div>
+            </div>
+
+            <div class="price-table style-3 md-whiteframe-1dp" layout="column">
+                <div class="package-type">
+                    <div class="title">Enterprise</div>
+                    <div class="subtitle">For big teams</div>
+                </div>
+
+                <div class="price md-primary-bg md-hue-3" layout="row" layout-align="center start">
+                    <div class="currency">$</div>
+                    <div layout="row" layout-align="center end">
+                        <div class="value">99</div>
+                        <div class="period">monthly per user</div>
+                    </div>
+                </div>
+
+                <div class="terms" layout="column" layout-align="start center">
+                    <div class="term">Unlimited projects</div>
+                    <div class="term">Unlimited pages</div>
+                    <div class="term">Unlimited disk space</div>
+                    <div class="term">For full feature list, call us</div>
+                </div>
+
+                <md-button class="cta-button md-raised md-accent">CALL US</md-button>
+
+                <div class="note">90 day free trial to start</div>
+            </div>
+        </div>
+        <!-- / STYLE 3 -->
+
+    </div>
+    <!-- / WIDGET GROUP -->
+</div>
